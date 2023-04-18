@@ -444,10 +444,12 @@ class MultiPPOTorchPolicy(PPOTorchPolicy, MultiAgentValueNetworkMixin):
         # TODO: Don't require users to call this manually.
         self._initialize_loss_from_dummy_batch()
 
+    # Objective function
     @override(PPOTorchPolicy)
     def loss(self, model, dist_class, train_batch):
         return ppo_surrogate_loss(self, model, dist_class, train_batch)
 
+    # The advantage function
     @override(PPOTorchPolicy)
     def postprocess_trajectory(
         self, sample_batch, other_agent_batches=None, episode=None
